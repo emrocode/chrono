@@ -1,0 +1,20 @@
+{
+  "name": "chrono",
+  "version": "1.0.0",
+  "main": "src/index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.mjs",
+    "fmt": "prettier --write src/*"
+  },
+  "author": "Emilio Romero <emrocode@gmail.com>",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "zx": "^8.5.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
+}
