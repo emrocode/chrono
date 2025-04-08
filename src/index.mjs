@@ -58,7 +58,7 @@ if (year > years.at(-1)) {
 }
 
 const newUrl = await spinner("Generating URL...", async () =>
-  useFetcher({ url, year, ms: 4000 }),
+  useFetcher({ url, year }),
 );
 
 const timestamp = newUrl[1][1];
