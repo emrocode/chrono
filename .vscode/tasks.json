@@ -5,6 +5,11 @@
       "label": "runscript",
       "type": "shell",
       "command": "npm i --save && npm run start",
+      "presentation": {
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      },
       "runOptions": {
         "runOn": "folderOpen"
       }
