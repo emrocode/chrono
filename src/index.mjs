@@ -61,6 +61,7 @@ const newUrl = await spinner("Generating URL...", async () =>
   useFetcher({ url, year }),
 );
 
+// TODO: validate newUrl value before accessing properties
 const timestamp = newUrl[1][1];
 const urlToShow = `${process.env.BASE_URL1}/${timestamp}if_/http://${url}`;
 

@@ -9,9 +9,11 @@ export const useFetcher = async ({ url, year, ms = 12000 }) => {
   try {
     // queries from https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server
     // use timestamp:4 (get 1 capture per year) 2025XXXXXXXXXX
+    const filters = "filter=mimetype:text/html&filter=statuscode:200";
+    const commonParams = `output=json&${filters}`;
     const qParams = year
-      ? `&from=${year}&to=${year}&output=json`
-      : `&collapse=timestamp:4&output=json&filter=mimetype:text/html&filter=statuscode:200`;
+      ? `&from=${year}&to=${year}&fastLatest=true&limit=-1&${commonParams}`
+      : `&collapse=timestamp:4&${commonParams}`;
 
     const res = await fetch(
       `${process.env.BASE_URL0}?url=${encodeURIComponent(url)}?${qParams}`,
