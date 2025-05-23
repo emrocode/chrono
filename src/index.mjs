@@ -57,11 +57,22 @@ if (year > years.at(-1)) {
   year = years.at(-1);
 }
 
-const newUrl = await spinner("Generating URL...", async () =>
-  useFetcher({ url, year }),
-);
+const newUrl = await spinner("Generating URL...", async () => {
+  const res = await useFetcher({ url, year });
 
-// TODO: validate newUrl value before accessing properties
+  if (res.status === "timeout") {
+    echo(chalk.red(res.message));
+    process.exit(4);
+  }
+
+  if (!Array.isArray(res) || res.length < 2) {
+    echo(chalk.red("Could not generate snapshot URL. Please try again."));
+    process.exit(5);
+  }
+
+  return res;
+});
+
 const timestamp = newUrl[1][1];
 const urlToShow = `${process.env.BASE_URL1}/${timestamp}if_/http://${url}`;
 
