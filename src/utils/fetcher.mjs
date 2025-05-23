@@ -1,4 +1,4 @@
-export const useFetcher = async ({ url, year, ms = 12000 }) => {
+export const useFetcher = async ({ url, year, ms = 120000 }) => {
   const controller = new AbortController();
   const signal = controller.signal;
 
