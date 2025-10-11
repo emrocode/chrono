@@ -1,7 +1,6 @@
 <div align="center">
 
-![Chrono](./public/chrono_dark.svg#gh-dark-mode-only)
-![Chrono](./public/chrono_light.svg#gh-light-mode-only)
+![Chrono](./public/chrono.svg)
 \
 _Wayback Machine CLI Link Generator.\
 Get archive URLs fast, right from the terminal._
