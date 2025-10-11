@@ -1,24 +1,20 @@
-## Chrono
-zx script for querying historical snapshots of any website via the Wayback Machine API
+<div align="center">
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/emrocode/chrono)
+![Chrono](./public/chrono_dark.svg#gh-dark-mode-only)
+![Chrono](./public/chrono_light.svg#gh-light-mode-only)
+\
+_Wayback Machine CLI Link Generator.\
+Get archive URLs fast, right from the terminal._
+</div>
+
+### Usage
+```bash
+npm exec "@emrocode/chrono"
+```
+
 ### Built with:
-- [zx]
 - [Wayback Machine API]
-
-### Installation and execution
-1. Clone this repo
-```bash
-gh repo clone emrocode/chrono
-```
-2. Go to folder and install dependencies
-```bash
-cd chrono && npm i --save
-```
-3. Run
-```bash
-npm start
-```
+- [zx]
 
 [zx]: https://google.github.io/zx
 [Wayback Machine API]: https://archive.org/help/wayback_api.php
