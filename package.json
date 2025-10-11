@@ -1,6 +1,6 @@
 {
   "name": "@emrocode/chrono",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Wayback Machine CLI Link Generator",
   "homepage": "https://github.com/emrocode/chrono#readme",
   "bugs": {
@@ -22,7 +22,7 @@
     "src/utils/fetcher.mjs"
   ],
   "scripts": {
-    "start": "zx src/index.mjs",
+    "start": "node src/index.mjs",
     "fmt": "prettier --write src/*"
   },
   "dependencies": {
