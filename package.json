@@ -1,6 +1,6 @@
 {
   "name": "@emrocode/chrono",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wayback Machine CLI Link Generator",
   "homepage": "https://github.com/emrocode/chrono#readme",
   "bugs": {
@@ -19,7 +19,8 @@
   },
   "files": [
     "src/index.mjs",
-    "src/utils/fetcher.mjs"
+    "src/utils/fetcher.mjs",
+    ".env"
   ],
   "scripts": {
     "start": "node src/index.mjs",
