@@ -1,17 +1,33 @@
 {
-  "name": "chrono",
+  "name": "@emrocode/chrono",
   "version": "1.0.0",
+  "description": "Wayback Machine CLI Link Generator",
+  "homepage": "https://github.com/emrocode/chrono#readme",
+  "bugs": {
+    "url": "https://github.com/emrocode/chrono/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emrocode/chrono.git"
+  },
+  "license": "MIT",
+  "author": "Emilio Romero <emrocode@gmail.com>",
+  "type": "module",
   "main": "src/index.mjs",
+  "bin": {
+    "chrono": "src/index.mjs"
+  },
+  "files": [
+    "src/index.mjs",
+    "src/utils/fetcher.mjs"
+  ],
   "scripts": {
     "start": "zx src/index.mjs",
     "fmt": "prettier --write src/*"
   },
-  "author": "Emilio Romero <emrocode@gmail.com>",
-  "license": "MIT",
-  "description": "",
   "dependencies": {
-    "dotenv": "^17.2.1",
-    "zx": "^8.8.1"
+    "dotenv": "^17.2.3",
+    "zx": "^8.8.4"
   },
   "devDependencies": {
     "prettier": "^3.6.2"
