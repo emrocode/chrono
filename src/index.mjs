@@ -1,11 +1,14 @@
-#!/usr/bin/env zx
+#!/usr/bin/env node
 
 import "dotenv/config";
 import "zx/globals";
 import { useFetcher } from "./utils/fetcher.mjs";
 
-const urlInput = await question(chalk.cyan("URL: "));
-var url = urlInput.replace(/^(?:https?:\/\/)?|\s+/g, "");
+const argv = minimist(process.argv.slice(2), {
+  string: ["web"]
+});
+const urlInput = argv.web || (await question(chalk.cyan("URL: ")));
+const url = urlInput.replace(/^(?:https?:\/\/)?|\s+/g, "");
 
 if (!url) {
   echo(chalk.yellow("A valid URL is required to continue."));
