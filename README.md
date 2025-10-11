@@ -8,7 +8,7 @@ Get archive URLs fast, right from the terminal._
 
 ### Usage
 ```bash
-npm exec "@emrocode/chrono"
+npx -- @emrocode/chrono@latest --web=github.com
 ```
 
 ### Built with:
