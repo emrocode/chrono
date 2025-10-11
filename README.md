@@ -4,14 +4,19 @@
 \
 _Wayback Machine CLI Link Generator.\
 Get archive URLs fast, right from the terminal._
+
 </div>
 
 ### Usage
+
+Use npm or any other package manager:
+
 ```bash
 npx -- @emrocode/chrono@latest --web=github.com
 ```
 
 ### Built with:
+
 - [Wayback Machine API]
 - [zx]
 
