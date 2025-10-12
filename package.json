@@ -21,10 +21,10 @@
     "src/index.mjs",
     "src/utils/fetcher.mjs",
     "src/utils/help.mjs",
-    ".env"
+    ".env.zx"
   ],
   "scripts": {
-    "start": "npx zx --cwd=. --env=./.env src/index.mjs",
+    "start": "npx zx --cwd=@emrocode/chrono --env=./.env.zx src/index.mjs",
     "fmt": "prettier --write src/*"
   },
   "dependencies": {
