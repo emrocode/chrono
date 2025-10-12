@@ -90,7 +90,7 @@ const newUrl = await spinner("Generating URL...", async () => {
 });
 
 const timestamp = newUrl[1][1];
-const urlToShow = `https://web.archive.org/web/${timestamp}if_/http://${url}`;
+const urlToShow = `${process.env.BASE_URL1}/${timestamp}if_/http://${url}`;
 
 if (argv.open && urlToShow) {
   await open(urlToShow);
