@@ -1,12 +1,25 @@
-#!/usr/bin/env node
+#!/usr/bin/env zx
 
-import "dotenv/config";
 import "zx/globals";
+import open from "open";
+import { showHelp } from "./utils/help.mjs";
 import { useFetcher } from "./utils/fetcher.mjs";
 
 const argv = minimist(process.argv.slice(2), {
-  string: ["web"]
+  string: ["web"],
+  boolean: ["help", "open"],
+  alias: {
+    h: "help",
+    o: "open",
+  },
 });
+
+// show help as a priority
+if (argv.help) {
+  showHelp();
+  process.exit(0);
+}
+
 const urlInput = argv.web || (await question(chalk.cyan("URL: ")));
 const url = urlInput.replace(/^(?:https?:\/\/)?|\s+/g, "");
 
@@ -78,5 +91,9 @@ const newUrl = await spinner("Generating URL...", async () => {
 
 const timestamp = newUrl[1][1];
 const urlToShow = `${process.env.BASE_URL1}/${timestamp}if_/http://${url}`;
+
+if (argv.open && urlToShow) {
+  await open(urlToShow);
+}
 
 echo(urlToShow);
