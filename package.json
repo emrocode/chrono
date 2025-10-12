@@ -13,18 +13,17 @@
   "license": "MIT",
   "author": "Emilio Romero <emrocode@gmail.com>",
   "type": "module",
-  "main": "src/index.mjs",
+  "main": "cli.mjs",
   "bin": {
-    "chrono": "src/index.mjs"
+    "chrono": "cli.mjs"
   },
   "files": [
-    "src/index.mjs",
-    "src/utils/fetcher.mjs",
-    "src/utils/help.mjs",
+    "cli.mjs",
+    "src/",
     ".env.zx"
   ],
   "scripts": {
-    "start": "npx zx --cwd=@emrocode/chrono --env=./.env.zx src/index.mjs",
+    "start": "npx zx -l --cwd=. --env=./.env.zx cli.mjs",
     "fmt": "prettier --write src/*"
   },
   "dependencies": {
