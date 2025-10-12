@@ -20,6 +20,7 @@
   "files": [
     "src/index.mjs",
     "src/utils/fetcher.mjs",
+    "src/utils/help.mjs",
     ".env"
   ],
   "scripts": {
