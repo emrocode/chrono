@@ -1,4 +1,4 @@
-const { version } = require("../package.json");
+const { version } = require("./package.json");
 
 export const showHelp = () => {
   echo`${chalk.bold(`Chrono ${version}`)}\n  A Wayback Machine CLI Link Generator\n\n${chalk.bold("Usage")}\n  npx -- @emrocode/chrono [options]\n\n${chalk.bold("Options")}\n  --help, -h    print help\n  --open, -o    open in a browser\n  --web=<URL>   set the base URL for monitoring`;
