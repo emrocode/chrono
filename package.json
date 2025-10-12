@@ -18,8 +18,7 @@
     "chrono": "src/index.mjs"
   },
   "files": [
-    "src/",
-    ".env.zx"
+    "src/"
   ],
   "scripts": {
     "start": "node src/index.mjs",
