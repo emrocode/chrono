@@ -22,7 +22,7 @@
     ".env.zx"
   ],
   "scripts": {
-    "start": "zx -l --cwd=../@emrocode/chrono --env=./.env.zx src/index.mjs",
+    "start": "npx zx -l --cwd=../@emrocode/chrono --env=./.env.zx src/index.mjs",
     "fmt": "prettier --write src/*"
   },
   "dependencies": {
