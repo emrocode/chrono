@@ -20,11 +20,10 @@
   "files": [
     "src/index.mjs",
     "src/utils/fetcher.mjs",
-    "src/utils/help.mjs",
-    ".env"
+    "src/utils/help.mjs"
   ],
   "scripts": {
-    "start": "npx zx --cwd=. --env=./.env src/index.mjs",
+    "start": "npx zx --cwd=. src/index.mjs",
     "fmt": "prettier --write src/*"
   },
   "dependencies": {

@@ -16,7 +16,7 @@ export const useFetcher = async ({ url, year, ms = 120000 }) => {
       : `&collapse=timestamp:4&${commonParams}`;
 
     const res = await fetch(
-      `${process.env.BASE_URL0}?url=${encodeURIComponent(url)}?${qParams}`,
+      `https://web.archive.org/cdx/search/cdx?url=${encodeURIComponent(url)}?${qParams}`,
       { signal },
     );
 
