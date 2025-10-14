@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
 import "zx/globals";
-import open from "open";
-import { showHelp } from "./utils/help.mjs";
-import { useFetcher } from "./utils/fetcher.mjs";
+import {
+  showHelp,
+  useFetcher,
+  getAndValidateYear,
+  openUrl,
+} from "./utils/index.mjs";
 
 const argv = minimist(process.argv.slice(2), {
   string: ["web"],
@@ -39,39 +42,12 @@ const data = await spinner("Fetching data...", async () => {
   return res;
 });
 
-if (data.length === 0) {
+if (!data.length) {
   echo(chalk.yellow("Wayback Machine has not archived that URL."));
   process.exit(3);
 }
 
-const years = [];
-
-// save all timestamps into years[]
-for (let i = 1; i < data.length; i++) {
-  const timestamp = data[i][1];
-  // match first 4 digits 2025XXXXXXXXXX
-  const match = timestamp.match(/^\d{4}/g);
-
-  if (match) {
-    years.push(match[0]);
-  }
-}
-
-echo(chalk.cyan("Available years:"), years);
-
-const yearInput = await question(chalk.cyan("Year: "));
-const date = new Date();
-var year = yearInput || date.getFullYear();
-
-if (year < years[0]) {
-  echo(chalk.yellow(`Year ${year} not found. Using ${years[0]}.`));
-  year = years[0];
-}
-
-if (year > years.at(-1)) {
-  echo(chalk.yellow(`Year ${year} not found. Using ${years.at(-1)}.`));
-  year = years.at(-1);
-}
+const year = await getAndValidateYear({ data });
 
 const newUrl = await spinner("Generating URL...", async () => {
   const res = await useFetcher({ url, year });
@@ -92,8 +68,6 @@ const newUrl = await spinner("Generating URL...", async () => {
 const timestamp = newUrl[1][1];
 const urlToShow = `https://web.archive.org/web/${timestamp}if_/http://${url}`;
 
-if (argv.open && urlToShow) {
-  await open(urlToShow);
-}
+await openUrl({ url: urlToShow }, argv);
 
 echo(urlToShow);
