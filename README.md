@@ -1,12 +1,19 @@
-# Chrono
+## Chrono
+
 Wayback Machine CLI Link Generator. Get archive URLs fast, right from the terminal.
 
-### Usage
+### Installation
 
 Use npm or any other package manager:
 
 ```bash
-npx -- @emrocode/chrono@latest --web=github.com
+npm i -g @emrocode/chrono
+```
+
+### Usage
+
+```bash
+chrono [options]
 ```
 
 ### Built with
