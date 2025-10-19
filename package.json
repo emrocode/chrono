@@ -2,6 +2,12 @@
   "name": "@emrocode/chrono",
   "version": "1.0.7",
   "description": "Wayback Machine CLI Link Generator",
+  "keywords": [
+    "chrono",
+    "wayback machine",
+    "cli",
+    "tool"
+  ],
   "homepage": "https://github.com/emrocode/chrono#readme",
   "bugs": {
     "url": "https://github.com/emrocode/chrono/issues"
