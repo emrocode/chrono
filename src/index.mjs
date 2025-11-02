@@ -67,7 +67,7 @@ import {
   });
 
   const timestamp = newUrl[1][1];
-  const urlToShow = `https://web.archive.org/web/${timestamp}if_/http://${url}/`;
+  const urlToShow = `https://web.archive.org/web/${timestamp}if_/http://${url}`;
 
   await openUrl({ url: urlToShow }, argv);
 
