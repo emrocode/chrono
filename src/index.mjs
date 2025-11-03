@@ -3,6 +3,8 @@
 import "zx/globals";
 import {
   showHelp,
+  showVersion,
+  isValidUrl,
   useFetcher,
   getAndValidateYear,
   openUrl,
@@ -11,25 +13,31 @@ import {
 (async function () {
   const argv = minimist(process.argv.slice(2), {
     string: ["web"],
-    boolean: ["help", "open"],
+    boolean: ["open", "version", "help"],
     alias: {
-      h: "help",
       o: "open",
+      v: "version",
+      h: "help",
     },
   });
 
   // show help as a priority
   if (argv.help) {
     showHelp();
-    process.exit(0);
+    process.exit();
+  }
+
+  if (argv.version) {
+    await showVersion();
+    process.exit();
   }
 
   const urlInput = argv.web || (await question(chalk.cyan("URL: ")));
-  const url = urlInput.replace(/^(?:https?:\/\/)?|\s+/g, "");
+  const url = urlInput.replace(/^(?:https?:\/\/(www\.))?|\s+/g, "");
 
-  if (!url) {
+  if (!isValidUrl({ url })) {
     echo(chalk.yellow("A valid URL is required to continue."));
-    process.exit(1);
+    process.exit();
   }
 
   const data = await spinner("Fetching data...", async () => {
@@ -37,7 +45,7 @@ import {
 
     if (res.status === "timeout") {
       echo(chalk.red(res.message));
-      process.exit(2);
+      process.exit();
     }
 
     return res;
@@ -45,7 +53,7 @@ import {
 
   if (!data.length) {
     echo(chalk.yellow("Wayback Machine has not archived that URL."));
-    process.exit(3);
+    process.exit();
   }
 
   const year = await getAndValidateYear({ data });
@@ -55,12 +63,12 @@ import {
 
     if (res.status === "timeout") {
       echo(chalk.red(res.message));
-      process.exit(4);
+      process.exit();
     }
 
     if (!Array.isArray(res) || res.length < 2) {
-      echo(chalk.red("Could not generate snapshot URL. Please try again."));
-      process.exit(5);
+      echo(chalk.red("Could not generate URL. Please try again."));
+      process.exit();
     }
 
     return res;
