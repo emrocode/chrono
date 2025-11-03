@@ -4,8 +4,7 @@ export const showHelp = () => {
   echo(chalk.bold("Usage"));
   echo("  chrono [options]\n");
   echo(chalk.bold("Options"));
-  echo("  --web=<URL>      set the base URL for monitoring");
-  echo("  --open, -o       open in a browser");
-  echo("  --version, -v    print current chrono version");
-  echo("  --help, -h       print help");
+  echo("  --web=<URL>    set the base URL for monitoring");
+  echo("  --open, -o     open in a browser");
+  echo("  --help, -h     print help");
 };

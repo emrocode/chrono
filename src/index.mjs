@@ -3,7 +3,6 @@
 import "zx/globals";
 import {
   showHelp,
-  showVersion,
   isValidUrl,
   useFetcher,
   getAndValidateYear,
@@ -13,10 +12,9 @@ import {
 (async function () {
   const argv = minimist(process.argv.slice(2), {
     string: ["web"],
-    boolean: ["open", "version", "help"],
+    boolean: ["open", "help"],
     alias: {
       o: "open",
-      v: "version",
       h: "help",
     },
   });
@@ -24,11 +22,6 @@ import {
   // show help as a priority
   if (argv.help) {
     showHelp();
-    process.exit();
-  }
-
-  if (argv.version) {
-    await showVersion();
     process.exit();
   }
 
