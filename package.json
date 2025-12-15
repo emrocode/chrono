@@ -33,11 +33,11 @@
     "fmt": "prettier --write src/*"
   },
   "dependencies": {
-    "open": "^10.2.0",
+    "open": "^11.0.0",
     "zx": "^8.8.5"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.38.4",
-    "prettier": "^3.6.2"
+    "prettier": "^3.7.4"
   }
 }
