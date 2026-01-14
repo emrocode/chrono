@@ -1,11 +1,15 @@
 export const showHelp = () => {
-  echo(chalk.bold("Chrono"));
-  echo("  A Wayback Machine CLI Link Generator\n");
-  echo(chalk.bold("Usage"));
-  echo("  chrono [options]\n");
-  echo(chalk.bold("Options"));
-  echo("  --web=<URL>    set the base URL for monitoring");
-  echo("  --open, -o     open in a browser");
-  echo("  --version, -v  print current chrono version");
-  echo("  --help, -h     print help");
+  echo(`
+  ${chalk.bold("Chrono")}
+    A Wayback Machine CLI Link Generator
+
+  ${chalk.bold("Usage")}
+    chrono [options]
+
+  ${chalk.bold("Options")}
+    --web=<URL>    set the base URL for monitoring
+    --open, -o     open in a browser
+    --version, -v  print current chrono version
+    --help, -h     print help
+`);
 };
