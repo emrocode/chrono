@@ -10,12 +10,12 @@ npx @emrocode/chrono [options]
 
 ### Options
 
-| Flag          | Alias | Description                     |
-| :------------ | :---- | :------------------------------ |
-| `--web=<URL>` |       | set the base URL for monitoring |
-| `--open`      | `-o`  | open in a browser               |
-| `--version`   | `-v`  | print current chrono version    |
-| `--help`      | `-h`  | print help                      |
+```text
+--web=<URL>    set the base URL for monitoring
+--open, -o     open in a browser
+--version, -v  print current chrono version
+--help, -h     print help
+```
 
 ### Example
 
