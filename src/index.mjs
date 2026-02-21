@@ -21,36 +21,37 @@ if (argv.v || argv.version) {
 }
 
 const urlInput = argv.web || (await question(chalk.cyan("URL: ")));
-const url = urlInput.replace(/^(?:https?:\/\/(www\.))?|\s+/g, "");
 
-if (!isValidUrl({ url })) {
+if (!isValidUrl({ url: urlInput })) {
   echo(chalk.yellow("A valid URL is required to continue."));
   process.exit();
 }
 
-const data = await spinner("Fetching data...", async () => {
-  const res = await useFetcher({ url });
+const url = isValidUrl({ url: urlInput, extract: true });
 
-  if (res.status === "timeout") {
-    echo(chalk.red(res.message));
+const data = await spinner("Fetching data...", async () => {
+  const { data: res, error } = await useFetcher({ url });
+
+  if (error) {
+    echo(chalk.red(error));
+    process.exit();
+  }
+
+  if (!res.length) {
+    echo(chalk.yellow("Wayback Machine has not archived that URL."));
     process.exit();
   }
 
   return res;
 });
 
-if (!data.length) {
-  echo(chalk.yellow("Wayback Machine has not archived that URL."));
-  process.exit();
-}
-
 const year = await getAndValidateYear({ data });
 
 const newUrl = await spinner("Generating URL...", async () => {
-  const res = await useFetcher({ url, year });
+  const { data: res, error } = await useFetcher({ url, year });
 
-  if (res.status === "timeout") {
-    echo(chalk.red(res.message));
+  if (error) {
+    echo(chalk.red(error));
     process.exit();
   }
 

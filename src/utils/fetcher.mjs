@@ -21,22 +21,29 @@ export const useFetcher = async ({ url, year, ms = 120000 }) => {
     );
 
     // clear timeout on success
-    clearTimeout(timeoutId);
+    if (timeoutId) clearTimeout(timeoutId);
 
-    const json = res.json();
-
-    return json;
-  } catch (error) {
-    // clear timeout on error
-    clearTimeout(timeoutId);
-
-    if (error.name === "AbortError") {
+    if (!res.ok) {
       return {
-        status: "timeout",
-        message: "Request was cancelled due to timeout.",
+        data: null,
+        error: `Error ${res.status}: ${res.statusText}`,
       };
     }
 
-    throw error;
+    const data = await res.json();
+
+    return { data, error: null };
+  } catch (error) {
+    // clear timeout on error
+    if (timeoutId) clearTimeout(timeoutId);
+
+    if (error.name === "AbortError") {
+      return {
+        data: null,
+        error: "Timeout: Request was cancelled.",
+      };
+    }
+
+    return { data: null, error: error.message };
   }
 };
