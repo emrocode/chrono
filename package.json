@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "start": "node src/index.mjs",
-    "format": "prettier --write src/*"
+    "format": "prettier \"**/*.{js,mjs,md}\" --write -u"
   },
   "dependencies": {
     "open": "^11.0.0",
