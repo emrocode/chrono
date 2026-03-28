@@ -1,6 +1,6 @@
 ## Chrono
 
-Wayback Machine CLI Link Generator. Get archive URLs fast, right from the terminal.
+Wayback Machine CLI Link Generator. Get archive URLs fast, directly from your terminal.
 
 ### Usage
 
@@ -13,14 +13,15 @@ npx @emrocode/chrono [options]
 |Flag|Alias|Description|
 |:---|:----|:----------|
 |`--web=<URL>`||set the base URL for monitoring|
+|`--year=<YEAR>`||specify a year from available archives|
 |`--open`|`-o`|open in a browser|
 |`--version`|`-v`|print current chrono version|
 |`--help`|`-h`|print help|
 
 ### Built with
 
-- [zx]
-- [Wayback Machine API]
+- **[zx]** - A tool for writing better scripts
+- **[Wayback Machine API]** - Internet Archive's Wayback Machine
 
 [zx]: https://google.github.io/zx
 [Wayback Machine API]: https://archive.org/help/wayback_api.php
