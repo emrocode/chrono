@@ -19,25 +19,21 @@
   "license": "MIT",
   "author": "Emilio Romero <emrocode@gmail.com>",
   "type": "module",
-  "main": "dist/index.mjs",
   "bin": {
-    "chrono": "dist/index.mjs"
+    "chrono": "src/index.mjs"
   },
   "files": [
-    "dist"
+    "src"
   ],
   "scripts": {
     "start": "node src/index.mjs",
-    "build": "ncc build src/index.mjs -o dist -m",
-    "prepublishOnly": "npm run build",
-    "fmt": "prettier --write src/*"
+    "format": "prettier --write src/*"
   },
   "dependencies": {
     "open": "^11.0.0",
     "zx": "^8.8.5"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.4",
     "prettier": "^3.8.1"
   }
 }
