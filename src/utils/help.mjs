@@ -7,9 +7,10 @@ export const showHelp = () => {
     chrono [options]
 
   ${chalk.bold("Options")}
-    --web=<URL>    set the base URL for monitoring
-    --open, -o     open in a browser
-    --version, -v  print current chrono version
-    --help, -h     print help
+    --web=<URL>     set the base URL for monitoring
+    --year=<YEAR>   specify a year from available archives
+    --open, -o      open in a browser
+    --version, -v   print current chrono version
+    --help, -h      print help
 `);
 };

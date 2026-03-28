@@ -1,4 +1,4 @@
-export const getAndValidateYear = async ({ data }) => {
+export const getAndValidateYear = async ({ data, year }) => {
   let years = [];
 
   // save all timestamps into years[]
@@ -13,6 +13,20 @@ export const getAndValidateYear = async ({ data }) => {
   }
 
   echo(chalk.cyan("Available years:"), years);
+
+  // if year flag is provided, validate it
+  if (year) {
+    const yearStr = String(year);
+
+    if (!years.includes(yearStr)) {
+      echo(chalk.yellow(`Year ${year} is not available in the archive.`));
+      echo(chalk.yellow(`Available years: ${years.join(",")}`));
+      process.exit(1);
+    }
+
+    echo(chalk.green(`Using year: ${year}`));
+    return yearStr;
+  }
 
   const date = new Date();
   let yearInput = (await question(chalk.cyan("Year: "))) || date.getFullYear();

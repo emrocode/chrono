@@ -10,61 +10,69 @@ import {
   openUrl,
 } from "./utils/index.mjs";
 
+const MIN_VALID_RESPONSE_LENGTH = 2;
+
+const handleError = (message, exitCode = 1) => {
+  echo(chalk.red(message));
+  process.exit(exitCode);
+};
+
 if (argv.h || argv.help) {
   showHelp();
-  process.exit();
+  process.exit(0);
 }
 
 if (argv.v || argv.version) {
   await showVersion();
-  process.exit();
+  process.exit(0);
 }
 
 const urlInput = argv.web || (await question(chalk.cyan("URL: ")));
-
 if (!isValidUrl({ url: urlInput })) {
   echo(chalk.yellow("A valid URL is required to continue."));
-  process.exit();
+  process.exit(1);
 }
 
 const url = isValidUrl({ url: urlInput, extract: true });
+if (!url) {
+  echo(chalk.yellow("Could not extract a valid URL."));
+  process.exit(1);
+}
 
 const data = await spinner("Fetching data...", async () => {
   const { data: res, error } = await useFetcher({ url });
 
-  if (error) {
-    echo(chalk.red(error));
-    process.exit();
-  }
+  if (error) return handleError(error);
 
   if (!res.length) {
     echo(chalk.yellow("Wayback Machine has not archived that URL."));
-    process.exit();
+    process.exit(1);
   }
 
   return res;
 });
 
-const year = await getAndValidateYear({ data });
+const year = await getAndValidateYear({ data, year: argv.year });
 
 const newUrl = await spinner("Generating URL...", async () => {
   const { data: res, error } = await useFetcher({ url, year });
 
-  if (error) {
-    echo(chalk.red(error));
-    process.exit();
-  }
+  if (error) return handleError(error);
 
-  if (!Array.isArray(res) || res.length < 2) {
-    echo(chalk.red("Could not generate URL. Please try again."));
-    process.exit();
+  if (!Array.isArray(res) || res.length < MIN_VALID_RESPONSE_LENGTH) {
+    handleError("Could not generate URL. Please try again.");
   }
 
   return res;
 });
 
-const timestamp = newUrl[1][1];
-const urlToShow = `https://web.archive.org/web/${timestamp}if_/http://${url}`;
+const timestamp = newUrl[1]?.[1];
+
+if (!timestamp) {
+  handleError("Invalid timestamp received from API.");
+}
+
+const urlToShow = `https://web.archive.org/web/${timestamp}id_/http://${url}`;
 
 await openUrl({ url: urlToShow }, argv);
 
