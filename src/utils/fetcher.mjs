@@ -20,8 +20,7 @@ export const useFetcher = async ({ url, year, ms = 120000 }) => {
       { signal },
     );
 
-    // clear timeout on success
-    if (timeoutId) clearTimeout(timeoutId);
+    clearTimeout(timeoutId);
 
     if (!res.ok) {
       return {
@@ -34,8 +33,7 @@ export const useFetcher = async ({ url, year, ms = 120000 }) => {
 
     return { data, error: null };
   } catch (error) {
-    // clear timeout on error
-    if (timeoutId) clearTimeout(timeoutId);
+    clearTimeout(timeoutId);
 
     if (error.name === "AbortError") {
       return {
