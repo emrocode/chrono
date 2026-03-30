@@ -7,73 +7,90 @@ import {
   isValidUrl,
   useFetcher,
   getAndValidateYear,
-  openUrl,
+  generateUrl,
 } from "./utils/index.mjs";
 
 const MIN_VALID_RESPONSE_LENGTH = 2;
 
-const handleError = (message, exitCode = 1) => {
+const exitWithError = (message, exitCode = 1) => {
   echo(chalk.red(message));
   process.exit(exitCode);
 };
 
-if (argv.h || argv.help) {
-  showHelp();
-  process.exit(0);
-}
+void (async function main() {
+  let unknownArgs = new Set();
+  const argv = minimist(process.argv.slice(2), {
+    string: ["web", "year"],
+    boolean: ["help", "version", "open"],
+    alias: {
+      h: "help",
+      v: "version",
+      o: "open",
+    },
+    unknown: (arg) => {
+      if (!unknownArgs.has(arg)) {
+        unknownArgs.add(arg);
+        echo(
+          chalk.yellow(
+            `Unknown argument: '${arg}'.\nUse -h to see available options.`,
+          ),
+        );
+        return false;
+      }
+    },
+  });
 
-if (argv.v || argv.version) {
-  await showVersion();
-  process.exit(0);
-}
+  if (argv.h || argv.help) {
+    showHelp();
+    process.exit(0);
+  }
 
-const urlInput = argv.web || (await question(chalk.cyan("URL: ")));
-if (!isValidUrl({ url: urlInput })) {
-  echo(chalk.yellow("A valid URL is required to continue."));
-  process.exit(1);
-}
+  if (argv.v || argv.version) {
+    await showVersion();
+    process.exit(0);
+  }
 
-const url = isValidUrl({ url: urlInput, extract: true });
-if (!url) {
-  echo(chalk.yellow("Could not extract a valid URL."));
-  process.exit(1);
-}
-
-const data = await spinner("Fetching data...", async () => {
-  const { data: res, error } = await useFetcher({ url });
-
-  if (error) return handleError(error);
-
-  if (!res.length) {
-    echo(chalk.yellow("Wayback Machine has not archived that URL."));
+  const urlInput = argv.web || (await question(chalk.cyan("URL: ")));
+  if (!isValidUrl({ url: urlInput })) {
+    echo(chalk.yellow("A valid URL is required to continue."));
     process.exit(1);
   }
 
-  return res;
-});
-
-const year = await getAndValidateYear({ data, year: argv.year });
-
-const newUrl = await spinner("Generating URL...", async () => {
-  const { data: res, error } = await useFetcher({ url, year });
-
-  if (error) return handleError(error);
-
-  if (!Array.isArray(res) || res.length < MIN_VALID_RESPONSE_LENGTH) {
-    handleError("Could not generate URL. Please try again.");
+  const url = isValidUrl({ url: urlInput, extract: true });
+  if (!url) {
+    echo(chalk.yellow("Could not extract a valid URL."));
+    process.exit(1);
   }
 
-  return res;
-});
+  const data = await spinner("Fetching data...", async () => {
+    const { data: res, error } = await useFetcher({ url });
 
-const timestamp = newUrl[1]?.[1];
+    if (error) exitWithError(error);
 
-if (!timestamp) {
-  handleError("Invalid timestamp received from API.");
-}
+    if (!res.length) {
+      echo(chalk.yellow("Wayback Machine has not archived that URL."));
+      process.exit(1);
+    }
 
-const urlToShow = `https://web.archive.org/web/${timestamp}id_/http://${url}`;
+    return res;
+  });
 
-await openUrl({ url: urlToShow }, argv);
+  const year = await getAndValidateYear({ data, year: argv.year });
 
-echo(urlToShow);
+  const newUrl = await spinner("Generating URL...", async () => {
+    const { data: res, error } = await useFetcher({ url, year });
+
+    if (error) exitWithError(error);
+
+    if (!Array.isArray(res) || res.length < MIN_VALID_RESPONSE_LENGTH) {
+      exitWithError("Could not generate URL. Please try again.");
+    }
+
+    return res;
+  });
+
+  const timestamp = newUrl[1]?.[1];
+  if (!timestamp) exitWithError("Invalid timestamp received from API.");
+
+  await generateUrl({ timestamp, urlInput, url }, argv);
+})();
