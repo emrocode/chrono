@@ -56,7 +56,7 @@ void (async function main() {
     process.exit(1);
   }
 
-  const url = isValidUrl({ url: urlInput, extract: true });
+  const url = isValidUrl({ url: urlInput, extract: true })?.[0];
   if (!url) {
     echo(chalk.yellow("Could not extract a valid URL."));
     process.exit(1);

@@ -9,16 +9,22 @@ export const useFetcher = async ({ url, year, ms = 120000 }) => {
   try {
     // queries from https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server
     // use timestamp:4 (get 1 capture per year) 2025XXXXXXXXXX
-    const filters = "filter=mimetype:text/html&filter=statuscode:200";
-    const commonParams = `output=json&${filters}`;
-    const qParams = year
-      ? `&from=${year}&to=${year}&fastLatest=true&limit=-1&${commonParams}`
-      : `&collapse=timestamp:4&${commonParams}`;
+    const baseUrl = new URL("https://web.archive.org/cdx/search/cdx");
+    baseUrl.searchParams.set("url", url);
+    baseUrl.searchParams.set("output", "json");
+    baseUrl.searchParams.append("filter", "mimetype:text/html");
+    baseUrl.searchParams.append("filter", "statuscode:200");
 
-    const res = await fetch(
-      `https://web.archive.org/cdx/search/cdx?url=${encodeURIComponent(url)}?${qParams}`,
-      { signal },
-    );
+    if (year) {
+      baseUrl.searchParams.set("from", year);
+      baseUrl.searchParams.set("to", year);
+      baseUrl.searchParams.set("fastLatest", "true");
+      baseUrl.searchParams.set("limit", "-1");
+    } else {
+      baseUrl.searchParams.set("collapse", "timestamp:4");
+    }
+
+    const res = await fetch(baseUrl, { signal });
 
     clearTimeout(timeoutId);
 
